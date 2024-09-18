@@ -45,7 +45,7 @@ export default function Home() {
   ];
 
   return(
-    <div>
+    <div className = "bg-black">
       <div className = "absolute top-10 w-full text-center py-4">
       <h1 className = "font-bold font-mono text-5xl">EVENTS</h1>
       </div>

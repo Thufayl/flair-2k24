@@ -24,13 +24,13 @@ export default function Card({ img, videoSrc, description, isCenter }) {
         )}
       </div>
       <div
-        className={`p-4 transition-all duration-300 ${
-          isCenter ? 'bg-blue-900' : 'bg-blue-400'
+        className={`p-4 transition-all duration-300 shadow-sm ${
+          isCenter ? 'bg-secondary' : 'bg-blue-400'
         }`}
       >
         <p
-          className={`text-base transition-all duration-300 ${
-            isCenter ? 'text-white text-lg font-bold' : 'text-gray-200'
+          className={`text-base text-center transition-all duration-300 ${
+            isCenter ? 'text-white text-lg font-bold font-sans' : 'text-gray-200'
           }`}
         >
           {description}
