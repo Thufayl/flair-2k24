@@ -1,52 +1,66 @@
-"use client";
+"use client"
 
 import { useState } from 'react';
 import Card from './card';
 
 const Carousel = ({ cards }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? cards.length - 1 : prevIndex - 1
-    );
-  };
+  const totalCards = cards.length;
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === cards.length - 1 ? 0 : prevIndex + 1
-    );
+  const handleClick = (index) => {
+    if (index < currentIndex) {
+      setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    } else if (index > currentIndex) {
+      setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, totalCards - 1));
+    }
   };
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto">
-      <div className="flex items-center justify-center">
-        <div className="w-full overflow-hidden">
-          <div
-            className="flex transition-transform duration-300 ease-out"
-            style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
-            }}
-          >
-            {cards.map((card, index) => (
-              <div key={index} className="w-full flex-shrink-0">
-                <Card img={card.img} description={card.description} />
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="relative w-full max-w-6xl mx-auto flex justify-center items-center">
+     
+      <div
+        className={`transition-all duration-300 transform ease-in-out${
+          currentIndex > 0
+            ? 'scale-105 -translate-x-10 opacity-100'
+            : 'scale-100 opacity-0'
+        } w-1/3 cursor-pointer`}
+        onClick={() => handleClick(currentIndex - 1)}
+      >
+        {currentIndex > 0 ? (
+          <Card
+            img={cards[currentIndex - 1].img}
+            videoSrc={cards[currentIndex - 1].videoSrc}
+            description={cards[currentIndex - 1].description}
+            isCenter={false} // left
+          />
+        ) : null}
       </div>
-      <button
-        onClick={goToPrevious}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 text-white rounded-full"
+
+      <div className="w-1/2 transition-all duration-300 transform ease-in-out scale-150 z-10">
+        <Card
+          img={cards[currentIndex].img}
+          videoSrc={cards[currentIndex].videoSrc}
+          description={cards[currentIndex].description}
+          isCenter={true} // Center
+        />
+      </div>
+
+      <div
+        className={`transition-all duration-300 transform ease-in-out ${
+          currentIndex < totalCards - 1
+            ? 'scale-105 translate-x-10 opacity-100'
+            : 'scale-100 opacity-0'
+        } w-1/3 cursor-pointer`}
+        onClick={() => handleClick(currentIndex + 1)}
       >
-        &#8592;
-      </button>
-      <button
-        onClick={goToNext}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 text-white rounded-full"
-      >
-        &#8594;
-      </button>
+        {currentIndex < totalCards - 1 ? (
+          <Card
+            img={cards[currentIndex + 1].img}
+            description={cards[currentIndex + 1].description}
+            isCenter={false} // right
+          />
+        ) : null}
+      </div>
     </div>
   );
 };
