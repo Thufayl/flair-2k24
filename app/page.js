@@ -1,58 +1,66 @@
-import Image from "next/image";
-import Card from "../components/card.jsx";
-import Carousel from "../components/carousel.jsx"
-export default function Home() {
-    const cardsData = [{
+"use client"
+
+import { useState, useEffect } from 'react';
+import Carousel from '../components/carousel';
+import TitleList from '../components/TitleList';
+const cardsData = [{
+      title: "QUANTUM QUEST",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "QUANTUM QUEST"
+      description: "Sample Description",
     },
     {
+      title: "COLLIDER CONCLAVE",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "COLLIDER CONCLAVE"
+      description: "Sample Description",
     },
     {
+      title: "GLITCHVERSE GUESS",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "GLITCHVERSE GUESS"
+      description: "Sample Description",  
     },
     {
+      title: "SINISTER HUNT",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "SINISTER HUNT"
+      description: "Sample Description",
     },
     {
+      title: "CODE SWING DUO",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "CODE SWING DUO"
+      description: "Sample Description",
     },
     {
+      title: "INTO THE MEMEVERSE",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "./assets/vidEx.mp4",
-      description: "INTO THE MEMEVERSE"
+      description: "Sample Description",
     },
     {
+      title: "MULTIVERSAL LINK UP",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "MULTIVERSAL LINK UP"
+      description: "Sample Description",
     },
     {
+      title: "SPIDEY PROMPTS",
       img: "/assets/card-bg-1.jpg",
-      videoSrc: "/assets/vidEx.mp4",
-      description: "SPIDEY PROMPTS"
+      description: "Sample Description",  
     },
   ];
 
-  return(
-    <div className = "bg-black">
-      <div className = "absolute top-10 w-full text-center py-4">
-      <h1 className = "font-bold font-mono text-5xl">EVENTS</h1>
+export default function Home() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+  
+    return (
+      <div className="flex h-screen bg-black">
+        {/* Title List on the left */}
+        <div className = "flex justify-left ml-28 mt-28 text-7xl w-2/4">
+        <TitleList
+          titles={cardsData.map(card => card.title)}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+        </div>
+  
+        {/* Carousel on the right */}
+        <Carousel cards={cardsData} currentIndex={currentIndex} />
       </div>
-      <div className="min-h-screen flex justify-center items-center">
-      <Carousel cards = {cardsData}/>
-    </div>
-    </div>
-
-  );
-}
+    );
+  }

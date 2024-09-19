@@ -1,68 +1,44 @@
-"use client"
+// components/Carousel.js
+import Card from './Card';
 
-import { useState } from 'react';
-import Card from './card';
-
-const Carousel = ({ cards }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const totalCards = cards.length;
-
-  const handleClick = (index) => {
-    if (index < currentIndex) {
-      setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-    } else if (index > currentIndex) {
-      setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, totalCards - 1));
-    }
-  };
-
+export default function Carousel({ cards, currentIndex }) {
   return (
-    <div className="relative w-full max-w-6xl mx-auto flex justify-center items-center">
-     
+    <div className="relative flex justify-center items-center w-2/3">
+      {/* Card Carousel */}
       <div
-        className={`transition-all duration-300 transform ease-in-out${
-          currentIndex > 0
-            ? 'scale-105 -translate-x-10 opacity-100'
-            : 'scale-100 opacity-0'
-        } w-1/3 cursor-pointer`}
-        onClick={() => handleClick(currentIndex - 1)}
+        className="relative w-full h-[900px] flex justify-center items-center"
+        style={{ perspective: '1000px' }} // Apply perspective for 3D effect
       >
-        {currentIndex > 0 ? (
-          <Card
-            img={cards[currentIndex - 1].img}
-            videoSrc={cards[currentIndex - 1].videoSrc}
-            description={cards[currentIndex - 1].description}
-            isCenter={false} // left
-          />
-        ) : null}
-      </div>
+        {cards.map((card, index) => {
+          const isActive = index === currentIndex;
+          const position =
+            (index - currentIndex + cards.length) % cards.length; // Circular positioning
 
-      <div className="w-1/2 transition-all duration-300 transform ease-in-out scale-150 z-10">
-        <Card
-          img={cards[currentIndex].img}
-          videoSrc={cards[currentIndex].videoSrc}
-          description={cards[currentIndex].description}
-          isCenter={true} // Center
-        />
-      </div>
+          // Position adjustments
+          const translateX = isActive ? 0 : position === 1 ? '200px' : '-200px'; // Move side cards left or right
+          const rotateY = isActive ? 0 : position === 1 ? 45 : -45; // Rotate outward
+          const zIndex = isActive ? 10 : 5; // Ensure active card is on top
+          
+          // Use visibility instead of opacity to hide non-active cards without transparency leaks
+          const visibility = isActive || position === 1 || position === cards.length - 1 ? 'visible' : 'hidden';
 
-      <div
-        className={`transition-all duration-300 transform ease-in-out ${
-          currentIndex < totalCards - 1
-            ? 'scale-105 translate-x-10 opacity-100'
-            : 'scale-100 opacity-0'
-        } w-1/3 cursor-pointer`}
-        onClick={() => handleClick(currentIndex + 1)}
-      >
-        {currentIndex < totalCards - 1 ? (
-          <Card
-            img={cards[currentIndex + 1].img}
-            description={cards[currentIndex + 1].description}
-            isCenter={false} // right
-          />
-        ) : null}
+          return (
+            <div
+              key={index}
+              className="absolute transition-transform duration-5000 ease-in-out"
+              style={{
+                transform: `translateX(${translateX}) rotateY(${rotateY}deg)`,
+                zIndex: zIndex,
+                visibility: visibility, // Control whether the card is visible or not
+                backfaceVisibility: 'hidden', // Ensure nothing "leaks" from behind
+                overflow: 'hidden', // Prevent overflow text/content
+              }}
+            >
+              <Card {...card} isActive={isActive} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-};
-
-export default Carousel;
+}

@@ -1,40 +1,25 @@
-export default function Card({ img, videoSrc, description, isCenter }) {
+// components/Card.js
+export default function Card({ title, img, description, isActive }) {
   return (
     <div
-      className={`max-w-7xl h-7xl rounded overflow-hidden shadow-lg transition-all duration-300 ${
-        isCenter ? 'scale-110 shadow-2xl' : 'scale-100 shadow-lg'
+      className={`relative w-[300px] h-[600px] rounded-lg shadow-lg transition-transform duration-500 ${
+        isActive ? 'opacity-100 scale-150' : 'opacity-50 scale-90'
       }`}
+      style={{
+        pointerEvents: isActive ? 'auto' : 'none', // Only the active card is clickable
+        transformStyle: 'preserve-3d', // Ensure 3D effect is preserved
+        backfaceVisibility: 'hidden', // Hide the back of the card to prevent leakage
+        overflow: 'hidden', // Ensures no content spills out
+      }}
     >
-      <div className="cursor-pointer">
-        {isCenter ? (
-          <video
-            className="w-full h-full object-cover"
-            src={videoSrc}
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-        ) : (
-          <img
-            className="w-full h-full object-cover"
-            src={img}
-            alt="Card"
-          />
-        )}
-      </div>
-      <div
-        className={`p-4 transition-all duration-300 shadow-sm ${
-          isCenter ? 'bg-secondary' : 'bg-blue-400'
-        }`}
-      >
-        <p
-          className={`text-base text-center transition-all duration-300 ${
-            isCenter ? 'text-white text-lg font-bold font-sans' : 'text-gray-200'
-          }`}
-        >
-          {description}
-        </p>
+      <img
+        src={img}
+        alt={title}
+        className="w-full h-full object-cover rounded-lg"
+      />
+      <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4">
+        <h2 className="text-white text-lg font-semibold">{title}</h2>
+        <p className="text-white">{description}</p>
       </div>
     </div>
   );
