@@ -3,7 +3,7 @@ export default function Card({ title, img, description, isActive }) {
   return (
     <div
       className={`relative w-[300px] h-[600px] rounded-lg shadow-lg transition-transform duration-500 ${
-        isActive ? 'opacity-100 scale-150' : 'opacity-50 scale-90'
+        isActive ? 'opacity-100 scale-115' : 'opacity-50 scale-75'
       }`}
       style={{
         pointerEvents: isActive ? 'auto' : 'none', // Only the active card is clickable

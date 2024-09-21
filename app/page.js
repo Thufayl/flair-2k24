@@ -45,22 +45,25 @@ const cardsData = [{
     },
   ];
 
-export default function Home() {
+  export default function Home() {
     const [currentIndex, setCurrentIndex] = useState(0);
   
     return (
-      <div className="flex h-screen bg-black">
-        {/* Title List on the left */}
-        <div className = "flex justify-left ml-28 mt-28 text-7xl w-2/4">
-        <TitleList
-          titles={cardsData.map(card => card.title)}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-        />
+      <div className="flex h-screen">
+        {/* Left side: Title List */}
+        <div className="w-1/3 flex flex-col items-start p-4">
+          <h1 className="text-center text-3xl my-4 font-sans items-center">EVENTS</h1>
+          <TitleList
+            titles={cardsData.map(card => card.title)}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+          />
         </div>
   
-        {/* Carousel on the right */}
-        <Carousel cards={cardsData} currentIndex={currentIndex} />
+        {/* Right side: Carousel */}
+        <div className="w-2/3 flex justify-center items-center">
+          <Carousel cards={cardsData} currentIndex={currentIndex} />
+        </div>
       </div>
     );
   }
