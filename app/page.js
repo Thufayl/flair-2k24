@@ -51,8 +51,8 @@ const cardsData = [{
     return (
       <div className="flex h-screen">
         {/* Left side: Title List */}
-        <div className="w-1/3 flex flex-col items-start p-4">
-          <h1 className="text-center text-3xl my-4 font-sans items-center">EVENTS</h1>
+        <div className="w-1/2 h-full flex flex-col items-start p-4">
+          <h1 className="text-center text-5xl mx-14 my-4 font-sans items-center">EVENTS</h1>
           <TitleList
             titles={cardsData.map(card => card.title)}
             currentIndex={currentIndex}
