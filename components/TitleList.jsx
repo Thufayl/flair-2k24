@@ -37,7 +37,7 @@ export default function TitleList({ titles, currentIndex, setCurrentIndex }) {
 
   return (
     <div
-      className="w-auto p-10 h-100vh overflow-y-auto overflow-x-hidden" // Ensures vertical scroll
+      className="w-auto p-10 h-screen overflow-y-auto overflow-x-hidden" // Ensures vertical scroll
       ref={listRef}
       onScroll={handleScroll}
       style={{ height: "100vh", overflowY: "auto" }} // Ensures scroll works
@@ -46,13 +46,15 @@ export default function TitleList({ titles, currentIndex, setCurrentIndex }) {
         <div
           key={index}
           onClick={() => setCurrentIndex(index)} // On title click, update the current card
-          className={`p-4 mb-2 text-7xl font-semibold transition-opacity duration-300 ${
+          className={`p-4 mb-2 text-7xl font-semibold transition-opacity duration-300 cursor-pointer ${
             index === currentIndex ? "text-blue-600" : "text-gray-700"
           }`}
         >
           {title}
         </div>
       ))}
+      <div style={{ height: "90%" }}>
+      </div>
     </div>
   );
 }
